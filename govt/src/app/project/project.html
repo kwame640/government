@@ -1,0 +1,56 @@
+<div class="max-w-2xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+  <h2 class="text-2xl font-bold mb-6 text-center text-blue-800">Upload Your Project</h2>
+
+  <form (ngSubmit)="onSubmit()" #projectForm="ngForm" enctype="multipart/form-data">
+    <!-- Title -->
+    <div class="mb-4">
+      <label class="block text-sm font-semibold mb-2">Project Title</label>
+      <input type="text" name="title" [(ngModel)]="project.title" required
+             class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+    </div>
+
+    <!-- Description -->
+    <div class="mb-4">
+      <label class="block text-sm font-semibold mb-2">Project Description</label>
+      <textarea name="description" [(ngModel)]="project.description" required
+                rows="3"
+                class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+    </div>
+
+    <!-- Year -->
+    <div class="mb-4">
+      <label class="block text-sm font-semibold mb-2">Year</label>
+      <select name="year" [(ngModel)]="project.year" required
+              class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+      </select>
+    </div>
+
+    <!-- File Upload -->
+    <div class="mb-6">
+      <label class="block text-sm font-semibold mb-2">Project File (Image)</label>
+      <input type="file" (change)="onFileSelected($event)" accept="image/*" required
+             class="w-full h-32 object-contain rounded mb-4 border border-gray-200 bg-gray-50">
+    </div>
+
+    <!-- Submit -->
+    <button type="submit"
+            [disabled]="!projectForm.form.valid || !selectedFile"
+            class="w-full bg-blue-800 text-white py-3 rounded hover:bg-blue-700 transition-all">
+      Upload Project
+    </button>
+  </form>
+</div>
+
+<!-- Uploaded Projects -->
+<div class="max-w-5xl mx-auto mt-10 px-4">
+  <h3 class="text-xl font-bold text-blue-800 mb-4">Uploaded Projects</h3>
+  <div class="grid md:grid-cols-2 gap-6">
+    <div *ngFor="let p of projects" class="bg-white p-4 rounded shadow">
+      <img [src]="p.image" alt="Project Image" class="w-full h-48 object-cover rounded mb-4">
+      <h4 class="text-lg font-bold text-gray-800">{{ p.title }}</h4>
+      <p class="text-sm text-gray-600 mb-2">{{ p.description }}</p>
+      <span class="text-xs text-gray-500">Year: {{ p.year }}</span>
+    </div>
+  </div>
+</div>

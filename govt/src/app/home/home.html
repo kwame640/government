@@ -1,1 +1,58 @@
-<p>home works!</p>
+<div class="p-6 bg-white">
+
+  <!-- 🔁 Top Carousel Background -->
+  <div
+    [style.backgroundImage]="'url(' + images[activeIndex] + ')'"
+class="w-full h-[800px] bg-cover bg-center rounded-lg shadow-lg relative transition-all duration-1000 ease-in-out"  >
+    <!-- Optional overlay -->
+    <div class="absolute inset-0 bg-black bg-opacity-40 rounded-lg"></div>
+  </div>
+
+  <!-- 📝 Text Section -->
+  <div class="text-center py-10">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">Together for a Better Future</h1>
+    <p class="text-lg text-gray-700 mb-6">
+      Join our mission to build a stronger, united nation for all.
+    </p>
+    <a routerLink="/campaign" class="bg-red-600 text-white px-6 py-3 rounded-full hover:bg-red-500 transition">
+      Join the Campaign
+    </a>
+  </div>
+
+  <!-- 👥 About Section -->
+  <div class="mt-16 text-center">
+    <h2 class="text-3xl font-bold text-red-600 mb-4">About Us</h2>
+    <p class="text-gray-700 max-w-2xl mx-auto">
+      We are a patriotic movement focused on unity, justice, and national growth. Our goal is to serve the people with truth and strength.
+    </p>
+  </div>
+
+  <!-- 🎯 Campaign Focus Section -->
+  <div class="mt-16 bg-gray-100 p-10 rounded-lg">
+    <h2 class="text-3xl font-bold text-blue-700 text-center mb-8">Our Focus</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+      <div class="bg-white p-6 rounded shadow border-t-4 border-red-600">
+        <h3 class="text-xl font-semibold text-blue-700 mb-2">Youth Empowerment</h3>
+        <p class="text-gray-600">Supporting education and job creation for the next generation.</p>
+      </div>
+      <div class="bg-white p-6 rounded shadow border-t-4 border-blue-700">
+        <h3 class="text-xl font-semibold text-red-600 mb-2">Affordable Healthcare</h3>
+        <p class="text-gray-600">Ensuring healthcare access for all citizens.</p>
+      </div>
+      <div class="bg-white p-6 rounded shadow border-t-4 border-red-600">
+        <h3 class="text-xl font-semibold text-blue-700 mb-2">Economic Progress</h3>
+        <p class="text-gray-600">Boosting local businesses and infrastructure development.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📣 Contact CTA -->
+  <div class="mt-16 text-center bg-red-600 text-white p-10 rounded-lg shadow-lg">
+    <h2 class="text-3xl font-bold mb-4">Get Involved</h2>
+    <p class="mb-6">Be part of the movement. Volunteer, donate, or spread the message.</p>
+    <a routerLink="/contact" class="bg-white text-red-700 font-semibold px-6 py-3 rounded-full hover:bg-gray-100 transition">
+      Contact Us
+    </a>
+  </div>
+
+</div>

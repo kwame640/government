@@ -1,15 +1,87 @@
-<nav class="bg-purple-700 text-white p-4 shadow-md sticky top-0 z-50">
-  <div class="container mx-auto flex justify-between items-center">
-    <h1 class="text-xl font-bold">Gov't Portal</h1>
-    <ul class="flex space-x-6 text-sm font-medium">
-        <li><a routerLink="/home" routerLinkActive="underline">Home</a></li>
-      <li><a routerLink="/executive" routerLinkActive="underline">Executive</a></li>
-      <li><a routerLink="/contact" routerLinkActive="underline">Contact Us</a></li>
-      <li><a routerLink="/about" routerLinkActive="underline">About Us</a></li>
-      <li><a routerLink="/campaign" routerLinkActive="underline">Campaign</a></li>
-      <li><a routerLink="/news" routerLinkActive="underline">News & Update</a></li>
-        <li><a routerLink="/login" routerLinkActive="underline">Login</a></li>
-      <li><a routerLink="/signup" routerLinkActive="underline">Signup</a></li>
+<nav class="bg-blue-800 text-white p-4 shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <!-- Logo -->
+    <img src="assets/images/logo.png" alt="Logo" class="h-10 w-auto" />
+
+    <!-- Hamburger Button (Mobile Only) -->
+    <button class="lg:hidden" (click)="menuOpen = !menuOpen">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+           viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+
+    <!-- Desktop Menu -->
+    <ul class="hidden lg:flex space-x-6 text-sm font-medium">
+      <li>
+        <a routerLink="/home"
+           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
+          Home
+        </a>
+      </li>
+      <li>
+        <a routerLink="/executive"
+           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
+          Executive
+        </a>
+      </li>
+      <li>
+        <a routerLink="/contact"
+           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
+          Contact Us
+        </a>
+      </li>
+      <li>
+        <a routerLink="/about"
+           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
+          About Us
+        </a>
+      </li>
+      <li>
+        <a routerLink="/campaign"
+           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
+          Campaign
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="/project"
+           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
+          Project
+        </a>
+      </li>
+      <li>
+        <a routerLink="/news"
+           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
+          News & Update
+        </a>
+      </li>
+      <li>
+        <a routerLink="/login"
+           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
+          Login
+        </a>
+      </li>
+      <li>
+        <a routerLink="/signup"
+           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
+          Signup
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div *ngIf="menuOpen" class="lg:hidden mt-4 px-4">
+    <ul class="flex flex-col space-y-3 text-sm font-medium">
+      <li><a routerLink="/home" class="block px-4 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">Home</a></li>
+      <li><a routerLink="/executive" class="block px-4 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">Executive</a></li>
+      <li><a routerLink="/contact" class="block px-4 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">Contact Us</a></li>
+      <li><a routerLink="/about" class="block px-4 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">About Us</a></li>
+      <li><a routerLink="/campaign" class="block px-4 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">Campaign</a></li>
+      <li><a routerLink="/news" class="block px-4 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">News & Update</a></li>
+      <li><a routerLink="/login" class="block px-4 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">Login</a></li>
+      <li><a routerLink="/signup" class="block px-4 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">Signup</a></li>
     </ul>
   </div>
 </nav>

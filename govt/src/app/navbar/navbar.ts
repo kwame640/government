@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common'; // ✅ ADD THIS
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterModule],
+  standalone: true, // ✅ Ensure it's standalone
+  imports: [CommonModule, RouterModule], // ✅ Include CommonModule here
   templateUrl: './navbar.html',
-  styleUrl: './navbar.css'
+  styleUrls: ['./navbar.css']
 })
 export class NavbarComponent {
-  // This component can be used to create a navigation bar for the application.
-  // It can include links to different routes defined in the app.routes.ts file.
-  // For example, links to 'signp' and 'news' components can be added here.
-
+  menuOpen = false;
 }

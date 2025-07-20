@@ -7,9 +7,10 @@ import { ExecutiveComponent } from './executive/executive';
 import { ContactComponent } from './contact/contact'; // Assuming you have a contact component 
 import { CampaignComponent } from './campaign/campaign'; // Assuming you have a campaign component 
 import { AboutComponent } from './about/about'; // Assuming you have an about component
+import { ProjectComponent } from './project/project'; // Assuming you have a project component
 
 export const routes: Routes = [
-  { path: 'signp', component: SignpComponent },
+  { path: 'signup', component: SignpComponent },
   { path: 'login', component: LoginComponent },
   { path: 'news', component: NewsComponent },
   { path: 'home', component: HomeComponent },
@@ -17,5 +18,6 @@ export const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'campaign', component: CampaignComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'project', component: ProjectComponent },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];
