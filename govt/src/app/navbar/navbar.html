@@ -3,7 +3,7 @@
     <!-- Logo -->
     <img src="assets/images/logo.png" alt="Logo" class="h-10 w-auto" />
 
-    <!-- Hamburger Button (Mobile Only) -->
+    <!-- Hamburger Button (for mobile) -->
     <button class="lg:hidden" (click)="menuOpen = !menuOpen">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
            viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
@@ -12,76 +12,35 @@
     </button>
 
     <!-- Desktop Menu -->
-    <ul class="hidden lg:flex space-x-6 text-sm font-medium">
-      <li>
-        <a routerLink="/home"
-           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
-          Home
-        </a>
-      </li>
-      <li>
-        <a routerLink="/executive"
-           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
-          Executive
-        </a>
-      </li>
-      <li>
-        <a routerLink="/contact"
-           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
-          Contact Us
-        </a>
-      </li>
-      <li>
-        <a routerLink="/about"
-           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
-          About Us
-        </a>
-      </li>
-      <li>
-        <a routerLink="/campaign"
-           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
-          Campaign
-        </a>
+    <ul class="hidden lg:flex space-x-6 text-sm font-medium items-center">
+      <li><a routerLink="/home" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Home</a></li>
+      <li><a routerLink="/executive" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Executive</a></li>
+      <li><a routerLink="/contact" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Contact Us</a></li>
+      <li><a routerLink="/about" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">About Us</a></li>
+      <li><a routerLink="/campaign" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Campaign</a></li>
+      <li><a routerLink="/project" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Project</a></li>
+      <li><a routerLink="/news" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">News & Update</a></li>
+
+      <li *ngIf="!isLoggedIn; else loggedInBlock">
+        <a routerLink="/login" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Login</a>
+        <a routerLink="/signup" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Signup</a>
       </li>
 
-      <li>
-        <a routerLink="/project"
-           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
-          Project
-        </a>
-      </li>
-      <li>
-        <a routerLink="/news"
-           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
-          News & Update
-        </a>
-      </li>
-      <li>
-        <a routerLink="/login"
-           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
-          Login
-        </a>
-      </li>
-      <li>
-        <a routerLink="/signup"
-           class="relative px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">
-          Signup
-        </a>
-      </li>
-    </ul>
-  </div>
+      <ng-template #loggedInBlock>
+  <li class="relative">
+    <!-- User icon button -->
+    <button (click)="toggleDropdown()" class="flex items-center space-x-2 focus:outline-none">
+      <img src="/assets/images/user-icon.png" class="w-6 h-6 rounded-full border border-white" alt="User" />
+    </button>
 
-  <!-- Mobile Menu -->
-  <div *ngIf="menuOpen" class="lg:hidden mt-4 px-4">
-    <ul class="flex flex-col space-y-3 text-sm font-medium">
-      <li><a routerLink="/home" class="block px-4 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">Home</a></li>
-      <li><a routerLink="/executive" class="block px-4 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">Executive</a></li>
-      <li><a routerLink="/contact" class="block px-4 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">Contact Us</a></li>
-      <li><a routerLink="/about" class="block px-4 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">About Us</a></li>
-      <li><a routerLink="/campaign" class="block px-4 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">Campaign</a></li>
-      <li><a routerLink="/news" class="block px-4 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">News & Update</a></li>
-      <li><a routerLink="/login" class="block px-4 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">Login</a></li>
-      <li><a routerLink="/signup" class="block px-4 py-2 rounded hover:bg-white hover:text-blue-800 transition duration-300">Signup</a></li>
+    <!-- Dropdown menu -->
+    <div *ngIf="dropdownOpen" class="absolute right-0 mt-2 w-40 bg-white text-gray-700 rounded-md shadow-md z-50">
+      <a routerLink="/profile" class="block px-4 py-2 hover:bg-gray-100">👤 Profile</a>
+      <button (click)="logout()" class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-100">🚪 Logout</button>
+    </div>
+  </li>
+</ng-template>
+
     </ul>
   </div>
 </nav>

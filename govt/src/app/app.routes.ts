@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { SignpComponent } from './signp/signp';
+import { SignupComponent } from './signp/signup'; // ✅ correct
 import { NewsComponent } from './news/news';
 import { LoginComponent } from './login/login';
 import { HomeComponent } from './home/home'; 
@@ -8,9 +8,10 @@ import { ContactComponent } from './contact/contact'; // Assuming you have a con
 import { CampaignComponent } from './campaign/campaign'; // Assuming you have a campaign component 
 import { AboutComponent } from './about/about'; // Assuming you have an about component
 import { ProjectComponent } from './project/project'; // Assuming you have a project component
+import { ProfileComponent } from './profile/profile'; // Assuming you have a profile component
 
 export const routes: Routes = [
-  { path: 'signup', component: SignpComponent },
+  { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'news', component: NewsComponent },
   { path: 'home', component: HomeComponent },
@@ -19,5 +20,6 @@ export const routes: Routes = [
   { path: 'campaign', component: CampaignComponent },
   { path: 'about', component: AboutComponent },
   { path: 'project', component: ProjectComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];

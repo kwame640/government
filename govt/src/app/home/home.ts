@@ -9,8 +9,8 @@ import { RouterModule } from '@angular/router';
 })
 export class HomeComponent {
   images: string[] = [
-    'assets/images/m1.png',
-    'assets/images/m4.png',
+    'assets/images/m2.png',
+    'assets/images/m3.png',
     'assets/images/m5.png',
   ];
   activeIndex: number = 0;
