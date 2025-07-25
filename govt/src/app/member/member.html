@@ -1,0 +1,48 @@
+<div class="p-6 max-w-4xl mx-auto bg-white rounded-xl shadow-md space-y-6">
+  <h2 class="text-2xl font-bold text-purple-700 mb-4">User Management</h2>
+
+  <div *ngIf="isLoading" class="text-gray-500">Loading users...</div>
+  <div *ngIf="errorMessage" class="text-red-600">{{ errorMessage }}</div>
+
+  <table *ngIf="!isLoading && users.length > 0" class="min-w-full table-auto border border-gray-200">
+    <thead class="bg-purple-100">
+      <tr>
+        <th class="px-4 py-2 text-left">ID</th>
+        <th class="px-4 py-2 text-left">Name</th>
+        <th class="px-4 py-2 text-left">Email</th>
+        <th class="px-4 py-2 text-left">Role</th>
+        <th class="px-4 py-2 text-left">Status</th>
+        <th class="px-4 py-2 text-left">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users" class="border-t">
+        <td class="px-4 py-2">{{ user.id }}</td>
+        <td class="px-4 py-2">{{ user.name }}</td>
+        <td class="px-4 py-2">{{ user.email }}</td>
+        <td class="px-4 py-2 capitalize">{{ user.role }}</td>
+        <td class="px-4 py-2">
+          <span
+            [ngClass]="{
+              'text-green-600 font-semibold': user.status === 'approved',
+              'text-yellow-600 font-semibold': user.status === 'pending'
+            }">
+            {{ user.status | titlecase }}
+          </span>
+        </td>
+        <td class="px-4 py-2">
+          <button
+            *ngIf="user.role !== 'admin'"
+            (click)="promoteToAdmin(user.id)"
+            class="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded shadow"
+          >
+            Make Admin
+          </button>
+          <span *ngIf="user.role === 'admin'" class="text-green-600 font-semibold">Admin</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!isLoading && users.length === 0" class="text-gray-500">No users found.</div>
+</div>

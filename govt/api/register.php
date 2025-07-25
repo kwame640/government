@@ -4,33 +4,28 @@ header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header('Content-Type: application/json');
 
-require 'db_connect.php'; // includes $pdo
+require 'db_connect.php';
 
-// Handle preflight request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
     exit;
 }
 
-// Get raw input and decode JSON
 $input = file_get_contents('php://input');
 $data = json_decode($input, true);
 
 if (!$data) {
     echo json_encode([
         'success' => false,
-        'message' => '❌ Failed to decode JSON.',
-        'raw_input' => $input
+        'message' => '❌ Failed to decode JSON.'
     ]);
     exit;
 }
 
-// Extract and sanitize input
 $name = trim($data['name'] ?? '');
 $email = trim($data['email'] ?? '');
 $password = $data['password'] ?? '';
 
-// Validate required fields
 if (empty($name) || empty($email) || empty($password)) {
     echo json_encode([
         'success' => false,
@@ -67,20 +62,26 @@ try {
         exit;
     }
 
-    // Hash and save password
+    // Determine role and status
+    $adminCheck = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'admin'");
+    $adminExists = $adminCheck->fetchColumn();
+
+    $role = $adminExists ? 'viewer' : 'admin';
+    $status = $adminExists ? 'pending' : 'approved';
+
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $stmt = $pdo->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-    $stmt->execute([$name, $email, $hashedPassword]);
+    $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role, status) VALUES (?, ?, ?, ?, ?)");
+    $stmt->execute([$name, $email, $hashedPassword, $role, $status]);
 
     echo json_encode([
         'success' => true,
-        'message' => "✅ $name registered successfully and saved!"
+        'message' => "✅ $name registered successfully as $role and is $status."
     ]);
+
 } catch (PDOException $e) {
     echo json_encode([
         'success' => false,
         'message' => '❌ Database error: ' . $e->getMessage()
     ]);
 }
-?>

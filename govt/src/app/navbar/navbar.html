@@ -18,29 +18,39 @@
       <li><a routerLink="/contact" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Contact Us</a></li>
       <li><a routerLink="/about" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">About Us</a></li>
       <li><a routerLink="/campaign" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Campaign</a></li>
-      <li><a routerLink="/project" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Project</a></li>
-      <li><a routerLink="/news" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">News & Update</a></li>
 
+      <!-- Only show this if user is an admin -->
+      <li *ngIf="isAdmin">
+        <a routerLink="/project" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Project</a>
+      </li>
+
+      <li *ngIf="isAdmin">
+        <a routerLink="/member" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Member</a>
+      </li>
+
+      <li>
+        <a routerLink="/news" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">News & Update</a>
+      </li>
+
+      <!-- Show login/signup if not logged in -->
       <li *ngIf="!isLoggedIn; else loggedInBlock">
         <a routerLink="/login" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Login</a>
         <a routerLink="/signup" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Signup</a>
       </li>
 
+      <!-- If logged in, show user icon and logout -->
       <ng-template #loggedInBlock>
-  <li class="relative">
-    <!-- User icon button -->
-    <button (click)="toggleDropdown()" class="flex items-center space-x-2 focus:outline-none">
-      <img src="/assets/images/user-icon.png" class="w-6 h-6 rounded-full border border-white" alt="User" />
-    </button>
+        <li class="relative">
+          <button (click)="toggleDropdown()" class="flex items-center space-x-2 focus:outline-none">
+            <img src="/assets/images/user-icon.png" class="w-6 h-6 rounded-full border border-white" alt="User" />
+          </button>
 
-    <!-- Dropdown menu -->
-    <div *ngIf="dropdownOpen" class="absolute right-0 mt-2 w-40 bg-white text-gray-700 rounded-md shadow-md z-50">
-      <a routerLink="/profile" class="block px-4 py-2 hover:bg-gray-100">👤 Profile</a>
-      <button (click)="logout()" class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-100">🚪 Logout</button>
-    </div>
-  </li>
-</ng-template>
-
+          <div *ngIf="dropdownOpen" class="absolute right-0 mt-2 w-40 bg-white text-gray-700 rounded-md shadow-md z-50">
+            <a routerLink="/profile" class="block px-4 py-2 hover:bg-gray-100">👤 Profile</a>
+            <button (click)="logout()" class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-100">🚪 Logout</button>
+          </div>
+        </li>
+      </ng-template>
     </ul>
   </div>
 </nav>

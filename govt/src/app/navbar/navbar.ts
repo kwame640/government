@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { AuthService } from '../auth';
+import { AuthService } from '../auth'; // Adjust the path if needed
 
 @Component({
   selector: 'app-navbar',
@@ -13,6 +13,7 @@ import { AuthService } from '../auth';
 })
 export class NavbarComponent implements OnInit {
   isLoggedIn = false;
+  isAdmin = false;
   menuOpen = false;
   dropdownOpen = false;
 
@@ -25,6 +26,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.authService.isLoggedIn$.subscribe(status => {
       this.isLoggedIn = status;
+      this.isAdmin = this.authService.isAdmin(); // 👈 Check admin role
     });
   }
 
@@ -35,10 +37,9 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
-    this.dropdownOpen = false; // optional: close after logout
+    this.dropdownOpen = false;
   }
 
-  // ✅ Close dropdown if click is outside
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: Event) {
     if (!this.eRef.nativeElement.contains(event.target)) {

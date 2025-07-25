@@ -44,11 +44,7 @@ export class ProjectComponent {
     this.http.post('http://localhost:8000/api/upload.php', formData).subscribe({
       next: (res: any) => {
         alert('Project uploaded!');
-        // Optional: Push project to the local list if needed
-        this.projects.push({
-          ...this.project,
-          image: URL.createObjectURL(this.selectedFile!)
-        });
+        // Optionally, reload projects from backend here
         this.project = { title: '', description: '', year: '' };
         this.selectedFile = null;
       },

@@ -1,8 +1,15 @@
 <?php
-header('Content-Type: application/json');
-include 'db_connect.php'; // This connects using PDO and defines $pdo
+// ✅ Allow requests from Angular (CORS fix)
+header("Access-Control-Allow-Origin: *"); // For local dev; replace * with http://localhost:4200 for tighter security
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
 
-// Get the email from the query string
+// ✅ Set JSON response
+header('Content-Type: application/json');
+
+include 'db_connect.php'; // Connects using PDO and defines $pdo
+
+// ✅ Get the email from the query string
 $email = $_GET['email'] ?? '';
 
 if (!$email) {
@@ -11,12 +18,12 @@ if (!$email) {
 }
 
 try {
-    // ✅ Use $pdo instead of $conn
-    $stmt = $pdo->prepare("SELECT id, name, email FROM users WHERE email = :email");
+    // ✅ Now includes 'role' to support admin-only access in Angular
+    $stmt = $pdo->prepare("SELECT id, name, email, role FROM users WHERE email = :email");
     $stmt->bindParam(':email', $email, PDO::PARAM_STR);
     $stmt->execute();
 
-    // Fetch the user
+    // ✅ Fetch and return user details
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {

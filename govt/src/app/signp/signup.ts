@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../environments/environments'; // Adjust path if needed
 
 @Component({
   selector: 'app-signup',
@@ -22,7 +23,7 @@ export class SignupComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   onSubmit() {
-    const url = 'http://localhost:8000/api/register.php';
+    const url = `${environment.siteUrl}/api/register.php`;
 
     this.http.post<any>(url, this.formData).subscribe({
       next: (data) => {

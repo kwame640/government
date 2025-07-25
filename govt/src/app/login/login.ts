@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../auth'; // Adjust path as needed
+import { AuthService } from '../auth'; // Adjust path if needed
+import { environment } from '../environments/environments'; // Adjust path if needed  
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent {
   constructor(private router: Router, private authService: AuthService) {}
 
   onSubmit() {
-    fetch('http://localhost:8000/api/login.php', {
+    fetch(`${environment.siteUrl}/api/login.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -30,15 +31,15 @@ export class LoginComponent {
     .then(res => res.json())
     .then(data => {
       if (data.success) {
-        alert(data.message || '✅ Login successful!');
-
-        // ✅ Pass full user object to login()
+        // ✅ Save full user info, including role
         this.authService.login({
           id: data.id,
           name: data.name,
-          email: data.email
+          email: data.email,
+          role: data.role // important for role checks later
         });
 
+        alert(data.message || '✅ Login successful!');
         this.router.navigate(['/dashboard']);
       } else {
         alert(data.message || '❌ Login failed.');

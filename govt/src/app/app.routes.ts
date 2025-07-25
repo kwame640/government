@@ -9,6 +9,7 @@ import { CampaignComponent } from './campaign/campaign'; // Assuming you have a 
 import { AboutComponent } from './about/about'; // Assuming you have an about component
 import { ProjectComponent } from './project/project'; // Assuming you have a project component
 import { ProfileComponent } from './profile/profile'; // Assuming you have a profile component
+import { MemberComponent } from './member/member'; // Assuming you have a member component
 
 export const routes: Routes = [
   { path: 'signup', component: SignupComponent },
@@ -20,6 +21,12 @@ export const routes: Routes = [
   { path: 'campaign', component: CampaignComponent },
   { path: 'about', component: AboutComponent },
   { path: 'project', component: ProjectComponent },
+  {path: 'member', component: MemberComponent },
+  {
+    path: 'newsletter',
+    loadComponent: () =>
+      import('./newsletter/newsletter').then((m) => m.NewsletterComponent)
+  },
   { path: 'profile', component: ProfileComponent },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];
