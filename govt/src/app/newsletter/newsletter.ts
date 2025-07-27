@@ -23,7 +23,6 @@ export class NewsletterComponent implements OnInit {
   ngOnInit(): void {}
 
   subscribe(): void {
-    // ✅ Basic email format check
     if (!this.email || !this.email.includes('@')) {
       alert('Please enter a valid email address.');
       return;
@@ -35,14 +34,34 @@ export class NewsletterComponent implements OnInit {
     this.http.post<any>('http://localhost:8000/api/newsletter_subscribe.php', payload).subscribe({
       next: (res) => {
         console.log('Subscription successful:', res);
-        this.submitted = true;
-        this.error = false;
-        this.email = '';
+
+        if (res.success) {
+          this.submitted = true;
+          this.error = false;
+          this.email = '';
+
+          // ✅ Hide success message after 5 seconds
+          setTimeout(() => {
+            this.submitted = false;
+          }, 5000);
+        } else {
+          this.error = true;
+
+          // ✅ Hide error message after 5 seconds
+          setTimeout(() => {
+            this.error = false;
+          }, 5000);
+        }
       },
       error: (err) => {
         console.error('Subscription failed:', err);
         this.error = true;
         this.submitted = false;
+
+        // ✅ Hide error message after 5 seconds
+        setTimeout(() => {
+          this.error = false;
+        }, 5000);
       }
     });
   }
@@ -57,6 +76,11 @@ export class NewsletterComponent implements OnInit {
       error: (err) => {
         console.error('Failed to load updates:', err);
         this.error = true;
+
+        // ✅ Hide error message after 5 seconds
+        setTimeout(() => {
+          this.error = false;
+        }, 5000);
       }
     });
   }

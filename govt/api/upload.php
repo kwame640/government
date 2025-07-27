@@ -1,15 +1,13 @@
-
 <?php
-header("Access-Control-Allow-Origin: *"); // For development. Use your domain in production.
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
+// ✅ Allow requests from Angular app
+header("Access-Control-Allow-Origin: http://localhost:4200");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json");
 
-file_put_contents('test_upload.txt', 'Upload script hit at ' . date('Y-m-d H:i:s') . PHP_EOL, FILE_APPEND);
-
-// Handle preflight OPTIONS request for CORS
+// ✅ Handle preflight request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
+    http_response_code(204);
     exit;
 }
 

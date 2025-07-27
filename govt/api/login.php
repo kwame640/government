@@ -34,7 +34,7 @@ if (empty($email) || empty($password)) {
 }
 
 try {
-    $stmt = $pdo->prepare("SELECT id, name, email, password, role FROM users WHERE email = ?");
+    $stmt = $pdo->prepare("SELECT id, name, email, password, role, status FROM users WHERE email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -54,10 +54,10 @@ try {
         exit;
     }
 
-    if ($user['role'] !== 'admin') {
+    if (strtolower($user['status']) !== 'approved') {
         echo json_encode([
             'success' => false,
-            'message' => '❌ Only admin is allowed to log in.'
+            'message' => '⏳ Your account is pending approval. Please wait for an admin.'
         ]);
         exit;
     }

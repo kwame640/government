@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../environments/environments'; // Adjust path if needed
 
 @Component({
   selector: 'app-project',
@@ -41,7 +42,7 @@ export class ProjectComponent {
     formData.append('year', this.project.year);
     formData.append('file', this.selectedFile);
 
-    this.http.post('http://localhost:8000/api/upload.php', formData).subscribe({
+    this.http.post(`${environment.siteUrl}/upload.php`, formData).subscribe({
       next: (res: any) => {
         alert('Project uploaded!');
         // Optionally, reload projects from backend here

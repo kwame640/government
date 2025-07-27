@@ -1,34 +1,33 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
 
-// Get email from request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    exit(0); // Preflight
+}
+
+require_once 'db_connect.php';
+
 $input = json_decode(file_get_contents("php://input"), true);
 $email = $input["email"] ?? '';
 
-// Validate email
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    http_response_code(400);
-    echo json_encode(["error" => "Invalid email"]);
+    echo json_encode(["success" => false, "message" => "Invalid email"]);
     exit;
 }
-
-// Connect to database (PDO)
-require_once 'db_connect.php';
 
 try {
     $stmt = $pdo->prepare("INSERT INTO newsletter (email) VALUES (:email)");
     $stmt->bindParam(':email', $email);
+    $stmt->execute();
 
-    if ($stmt->execute()) {
-        echo json_encode(["success" => true]);
-    } else {
-        http_response_code(500);
-        echo json_encode(["error" => "Insert failed."]);
-    }
+    echo json_encode(["success" => true, "message" => "Subscription successful!"]);
 } catch (PDOException $e) {
-    http_response_code(500);
-    echo json_encode(["error" => "Database error: " . $e->getMessage()]);
+    if ($e->getCode() == 23000) { // Duplicate entry
+        echo json_encode(["success" => false, "message" => "Email already subscribed."]);
+    } else {
+        echo json_encode(["success" => false, "message" => "Database error."]);
+    }
 }
-?>

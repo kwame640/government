@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { AuthService } from '../auth'; // Adjust the path if needed
+import { AuthService } from '../auth';
 
 @Component({
   selector: 'app-navbar',
@@ -16,6 +16,7 @@ export class NavbarComponent implements OnInit {
   isAdmin = false;
   menuOpen = false;
   dropdownOpen = false;
+  dropdownLocked = false; // ✅ Tracks click locking
 
   constructor(
     private authService: AuthService,
@@ -26,24 +27,35 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.authService.isLoggedIn$.subscribe(status => {
       this.isLoggedIn = status;
-      this.isAdmin = this.authService.isAdmin(); // 👈 Check admin role
+      this.isAdmin = this.authService.isAdmin();
     });
   }
 
-  toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen;
+  /** ✅ Hover Mode */
+  onHover(isOver: boolean) {
+    if (!this.dropdownLocked) {
+      this.dropdownOpen = isOver;
+    }
+  }
+
+  /** ✅ Click locks the dropdown */
+  toggleDropdown(lock: boolean) {
+    this.dropdownLocked = lock ? !this.dropdownLocked : false;
+    this.dropdownOpen = this.dropdownLocked || !this.dropdownOpen;
   }
 
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
     this.dropdownOpen = false;
+    this.dropdownLocked = false;
   }
 
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: Event) {
     if (!this.eRef.nativeElement.contains(event.target)) {
       this.dropdownOpen = false;
+      this.dropdownLocked = false;
     }
   }
 }

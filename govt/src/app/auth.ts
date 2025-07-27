@@ -36,6 +36,11 @@ export class AuthService {
     return user ? JSON.parse(user) : null;
   }
 
+  // ✅ Get the current user's email (safe shortcut)
+  getEmail(): string | null {
+    return this.getUser()?.email || null;
+  }
+
   // ✅ Check if user is admin based on their role
   isAdmin(): boolean {
     const user = this.getUser();
