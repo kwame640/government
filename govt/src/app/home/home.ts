@@ -24,7 +24,7 @@ interface Project {
 })
 export class HomeComponent {
   images: string[] = [
-    'assets/images/m2.png',
+    'assets/images/m2.jpg',
     'assets/images/m3.png',
     'assets/images/m5.png',
   ];
