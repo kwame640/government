@@ -13,18 +13,17 @@ import { environment } from '../environments/environments'; // Adjust path if ne
   styleUrls: ['./signup.css']
 })
 export class SignupComponent {
-  // Two-way bound form data
-  formData = {
-    name: '',
-    email: '',
-    password: ''
-  };
+  formData = { name: '', email: '', password: '' };
+  showPassword = false;
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
   onSubmit() {
     const url = `${environment.siteUrl}/api/register.php`;
-
     this.http.post<any>(url, this.formData).subscribe({
       next: (data) => {
         alert(data.message || 'Registered!');
@@ -33,7 +32,7 @@ export class SignupComponent {
         }
       },
       error: (error) => {
-        console.error('❌ Error:', error);
+        console.error('Error:', error);
         alert('Something went wrong.');
       }
     });
