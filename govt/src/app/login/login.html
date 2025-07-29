@@ -1,13 +1,14 @@
 <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
 
 <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-700 to-red-900 px-4">
   <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
-    <h2 class="text-2xl font-bold text-red-700 mb-6 text-center">Welcome Back</h2>
-    
+    <h2 class="text-2xl font-bold text-red-700 mb-6 text-center">
+      Welcome Back
+    </h2>
+
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <!-- Email -->
       <div class="mb-4">
@@ -23,7 +24,7 @@
       </div>
 
       <!-- Password with toggle -->
-      <div class="mb-6 relative">
+      <div class="mb-2 relative">
         <label class="block text-sm text-gray-700">Password</label>
         <input
           [type]="showPassword ? 'text' : 'password'"
@@ -38,10 +39,19 @@
         <button
           type="button"
           (click)="togglePasswordVisibility()"
-          class="absolute inset-y-0 right-3 flex items-center text-gray-500 top-[32px]"
+          class="absolute right-3 top-[32px] text-gray-500"
         >
           <i [ngClass]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
         </button>
+      </div>
+
+      <!-- Forgot password link -->
+      <div class="mb-6 text-right">
+        <a
+          routerLink="/forget"
+          class="text-sm text-red-600 hover:underline"
+          >Forgot Password?</a
+        >
       </div>
 
       <!-- Login Button -->
@@ -52,9 +62,14 @@
         Login
       </button>
 
+      <!-- Signup -->
       <p class="mt-4 text-sm text-center text-gray-600">
         Don't have an account?
-        <a routerLink="/signup" class="text-red-600 font-medium hover:underline">Sign Up</a>
+        <a
+          routerLink="/signup"
+          class="text-red-600 font-medium hover:underline"
+          >Sign Up</a
+        >
       </p>
     </form>
   </div>

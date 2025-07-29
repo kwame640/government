@@ -18,7 +18,7 @@ export class LoginComponent {
     password: ''
   };
 
-  showPassword = false; // ✅ Added for toggle
+  showPassword = false;
 
   constructor(private router: Router, private authService: AuthService) {}
 
@@ -34,8 +34,8 @@ export class LoginComponent {
       },
       body: JSON.stringify(this.formData)
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (data.success) {
           this.authService.login({
             id: data.id,
@@ -43,14 +43,13 @@ export class LoginComponent {
             email: data.email,
             role: data.role
           });
-
           alert(data.message || '✅ Login successful!');
           this.router.navigate(['/dashboard']);
         } else {
           alert(data.message || '❌ Login failed.');
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Login error:', error);
         alert('Something went wrong.');
       });

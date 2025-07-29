@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-campaign',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './campaign.html',
-  styleUrl: './campaign.css'
+  styleUrls: ['./campaign.css']
 })
 export class CampaignComponent {
-  // This component can be used to display information about the campaign.
-  // It can include details about the campaign's goals, activities, and how users can get involved.
-  // For example, links to 'donate', 'volunteer', and 'events' components can be added here.
-
 }

@@ -1,0 +1,38 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="bg-white p-6 rounded-lg shadow-md max-w-md w-full">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Reset Password</h2>
+    <p class="text-sm text-gray-600 mb-4 text-center">
+      Enter your new password below.
+    </p>
+
+    <form (ngSubmit)="submit()">
+      <input
+        type="password"
+        [(ngModel)]="newPassword"
+        name="newPassword"
+        placeholder="New password"
+        class="w-full border px-4 py-2 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-red-600"
+        required
+      />
+
+      <input
+        type="password"
+        [(ngModel)]="confirmPassword"
+        name="confirmPassword"
+        placeholder="Confirm password"
+        class="w-full border px-4 py-2 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-red-600"
+        required
+      />
+
+      <button
+        type="submit"
+        class="w-full bg-red-700 text-white py-2 rounded-lg hover:bg-red-800 transition"
+      >
+        Reset Password
+      </button>
+    </form>
+
+    <p *ngIf="message" class="text-green-600 mt-3 text-center">{{ message }}</p>
+    <p *ngIf="error" class="text-red-600 mt-3 text-center">{{ error }}</p>
+  </div>
+</div>
