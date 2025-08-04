@@ -1,24 +1,24 @@
 <?php
-// ✅ Allow requests from Angular app
+// ✅ Allow requests from Angular
 header("Access-Control-Allow-Origin: http://localhost:4200");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json");
 
-// ✅ Handle preflight request
+// ✅ Handle preflight request (CORS)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
     exit;
 }
 
-require_once 'db_connect.php'; // Ensure $pdo is defined here
+require_once 'db_connect.php'; // make sure this sets up $pdo correctly
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'] ?? '';
     $description = $_POST['description'] ?? '';
     $year = $_POST['year'] ?? '';
 
-    // Validate required fields
+    // ✅ Validate required fields
     if (!$title || !$description || !$year || !isset($_FILES['file'])) {
         http_response_code(400);
         echo json_encode(['error' => 'Missing required fields']);
@@ -26,21 +26,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $file = $_FILES['file'];
-    $uploadDir = 'uploads/';
-    $filename = $file['name'];
+    $uploadDir = __DIR__ . '/uploads/';
+    $publicPath = 'uploads/';
+    $filename = 'project_' . uniqid() . '.' . pathinfo($file['name'], PATHINFO_EXTENSION);
     $uploadPath = $uploadDir . $filename;
 
-    // Create uploads directory if it doesn't exist
+    // ✅ Ensure uploads directory exists
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0777, true);
     }
 
-    // Move file and generate public URL
+    // ✅ Move file
     if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
-        // Save only the image filename in the database
+        // ✅ Save to DB (only filename)
         $stmt = $pdo->prepare("INSERT INTO projects (title, description, year, image) VALUES (?, ?, ?, ?)");
         if ($stmt->execute([$title, $description, $year, $filename])) {
-            echo json_encode(['message' => 'Project uploaded successfully']);
+            echo json_encode([
+                'message' => 'Project uploaded successfully',
+                'filename' => $filename,
+                'url' => "http://localhost:8000/{$publicPath}{$filename}"
+            ]);
         } else {
             http_response_code(500);
             echo json_encode(['error' => 'Database insert failed']);

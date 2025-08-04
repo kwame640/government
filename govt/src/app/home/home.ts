@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { environment } from '../environments/environments'; // Adjust path if needed
+import { environment } from '../environments/environments';
 import { FormsModule } from '@angular/forms';
 
 interface Project {
@@ -31,6 +31,9 @@ export class HomeComponent {
   activeIndex: number = 0;
   projects: Project[] = [];
   searchTerm: string = '';
+
+  // ✅ Track multiple expanded projects
+  expandedProjects = new Set<string>();
 
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
 
@@ -64,5 +67,28 @@ export class HomeComponent {
       (project.title?.toLowerCase() ?? '').includes(term) ||
       (project.year?.toString() ?? '').includes(term)
     );
+  }
+
+  // ✅ Toggle single project expansion without affecting others
+  toggleReadMore(title: string) {
+    if (this.expandedProjects.has(title)) {
+      this.expandedProjects.delete(title);
+    } else {
+      this.expandedProjects.add(title);
+    }
+  }
+
+  // ✅ Check if project is expanded
+  isExpanded(title: string): boolean {
+    return this.expandedProjects.has(title);
+  }
+
+  // ✅ Show full or trimmed description
+  getShortDescription(description: string, title: string): string {
+    const maxLength = 100;
+    if (this.isExpanded(title) || description.length <= maxLength) {
+      return description;
+    }
+    return description.substring(0, maxLength) + '...';
   }
 }
