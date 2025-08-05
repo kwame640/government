@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../environments/environments';
+import { LoadingComponent } from '../loading/loading'; // 👈 Import your reusable loading spinner
 
 interface User {
   id: number;
@@ -25,7 +26,7 @@ interface ActionResponse {
 @Component({
   selector: 'app-member',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, FormsModule, LoadingComponent], // 👈 Register component here
   templateUrl: './member.html',
   styleUrls: ['./member.css']
 })
@@ -36,24 +37,28 @@ export class MemberComponent implements OnInit {
   errorMessage = '';
   successMessage = '';
 
-  // ✅ Add User Modal State
   isAddUserModalOpen = false;
   newUser = { name: '', email: '', password: '', role: 'viewer' };
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      const user = JSON.parse(storedUser);
-      this.adminEmail = user.email.trim().toLowerCase();
-      console.info('🔍 Admin email used for fetch:', this.adminEmail);
+ ngOnInit(): void {
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+    const user = JSON.parse(storedUser);
+    this.adminEmail = user.email.trim().toLowerCase();
+    console.info('🔍 Admin email used for fetch:', this.adminEmail);
+
+    // 👇 Start loading and delay fetchUsers by 5 seconds
+    this.isLoading = true;
+    setTimeout(() => {
       this.fetchUsers();
-    } else {
-      this.errorMessage = '⚠️ User not found in local storage.';
-      console.warn('🚫 No user object found in localStorage.');
-    }
+    }, 5000); // 5 seconds delay
+  } else {
+    this.errorMessage = '⚠️ User not found in local storage.';
+    console.warn('🚫 No user object found in localStorage.');
   }
+}
 
   fetchUsers(): void {
     this.resetMessages();
@@ -134,7 +139,6 @@ export class MemberComponent implements OnInit {
     });
   }
 
-  // ✅ ADD USER FEATURE
   openAddUserModal(): void {
     this.isAddUserModalOpen = true;
   }

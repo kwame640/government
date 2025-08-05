@@ -6,10 +6,19 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../environments/environments';
 
+// ✅ Import the loading component
+import { LoadingComponent } from '../loading/loading'; // adjust this path to match your project
+
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule, FormsModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    HttpClientModule,
+    FormsModule,
+    LoadingComponent // ✅ added here
+  ],
   providers: [AuthService],
   templateUrl: './profile.html'
 })
@@ -20,10 +29,11 @@ export class ProfileComponent implements OnInit {
   newPassword = '';
   confirmPassword = '';
 
-  // Password toggle
   showOldPassword = false;
   showNewPassword = false;
   showConfirmPassword = false;
+
+  isLoading = true;
 
   constructor(
     private authService: AuthService,
@@ -38,12 +48,20 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    this.http.get(`${environment.siteUrl}/api/profile.php`, {
-      params: { email: this.user.email }
-    }).subscribe({
-      next: (data) => (this.user = data),
-      error: (err: any) => console.error('Profile error:', err)
-    });
+    setTimeout(() => {
+      this.http.get(`${environment.siteUrl}/api/profile.php`, {
+        params: { email: this.user.email }
+      }).subscribe({
+        next: (data) => {
+          this.user = data;
+          this.isLoading = false;
+        },
+        error: (err: any) => {
+          console.error('Profile error:', err);
+          this.isLoading = false;
+        }
+      });
+    }, 5000); // 5 seconds delay to simulate loading
   }
 
   togglePassword(field: string) {
@@ -57,26 +75,22 @@ export class ProfileComponent implements OnInit {
   }
 
   private isPasswordStrong(password: string): boolean {
-    // At least 8 chars, one uppercase, one lowercase, one number, one special char
     const regex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return regex.test(password);
   }
 
   changePassword() {
-    // Ensure all fields filled
     if (!this.oldPassword || !this.newPassword || !this.confirmPassword) {
       alert('All fields are required!');
       return;
     }
 
-    // Confirm password match
     if (this.newPassword !== this.confirmPassword) {
       alert('New password and confirm password do not match!');
       return;
     }
 
-    // Strong password check
     if (!this.isPasswordStrong(this.newPassword)) {
       alert(
         'Password must be at least 8 characters, include uppercase, lowercase, number, and special character.'
@@ -84,13 +98,11 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    // Prevent old == new
     if (this.oldPassword === this.newPassword) {
       alert('New password cannot be the same as the old password!');
       return;
     }
 
-    // Send update request
     this.http
       .post<any>(`${environment.siteUrl}/api/change_password.php`, {
         email: this.user.email,

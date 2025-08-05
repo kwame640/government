@@ -1,4 +1,6 @@
-<div class="p-6 bg-white min-h-screen">
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div *ngIf="!isLoading" class="p-6 bg-white min-h-screen">
   <div class="text-center mb-10">
     <h2 class="text-4xl font-bold text-red-700">Latest News & Updates</h2>
     <p class="text-gray-600 mt-2">Stay informed with our most recent announcements and stories.</p>

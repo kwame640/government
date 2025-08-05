@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environments';
 import { FormsModule } from '@angular/forms';
-import { LoadingComponent } from '../loading/loading'; // ✅ Make sure path is correct
+import { LoadingComponent } from '../loading/loading';
 
 interface Project {
   title: string;

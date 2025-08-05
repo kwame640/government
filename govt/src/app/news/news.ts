@@ -1,12 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { LoadingComponent } from '../loading/loading'; // Make sure this path is correct
 
 @Component({
   selector: 'app-news',
+  standalone: true,
+  imports: [CommonModule, LoadingComponent],
   templateUrl: './news.html',
-  styleUrls: ['./news.css'], // ✅ corrected from `styleUrl` to `styleUrls` (Angular expects an array)
-  standalone: true // ✅ added if using standalone component setup
+  styleUrls: ['./news.css']
 })
-export class NewsComponent {
+export class NewsComponent implements OnInit {
+  isLoading: boolean = true;
+
+  ngOnInit(): void {
+    // Simulate loading for 5 seconds
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 5000);
+  }
+
   toggleReadMore(event: Event) {
     const button = event.target as HTMLElement;
     const moreText = button.previousElementSibling as HTMLElement;

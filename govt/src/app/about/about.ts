@@ -1,14 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { LoadingComponent } from '../loading/loading';
 
 @Component({
   selector: 'app-about',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, LoadingComponent],
   templateUrl: './about.html',
-  styleUrl: './about.css'
+  styleUrls: ['./about.css']
 })
-export class AboutComponent {
-  // This component can be used to display information about the application.
-  // It can include details about the purpose of the app, its features, and how to use it.
-  // For example, links to 'features', 'team', and 'contact' components can be added here.
+export class AboutComponent implements OnInit {
+  isLoading = true;
 
+  ngOnInit() {
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 5000); // ⏳ show loading for 5 seconds
+  }
 }

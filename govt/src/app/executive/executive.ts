@@ -1,14 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { LoadingComponent } from '../loading/loading';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-executive',
-  imports: [],
+  standalone: true,
+  imports: [LoadingComponent, CommonModule],
   templateUrl: './executive.html',
-  styleUrl: './executive.css'
+  styleUrls: ['./executive.css']
 })
-export class ExecutiveComponent {
-  // This component can be used to display information about the executive branch of the government.
-  // It can include details about the President, Vice President, and other key officials.
-  // For example, links to 'president' and 'vice-president' components can be added here.
+export class ExecutiveComponent implements OnInit {
+  isLoading: boolean = true;
 
+  ngOnInit(): void {
+    // ⏳ Show loading for 5 seconds
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 5000);
+  }
 }

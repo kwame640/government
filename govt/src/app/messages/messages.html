@@ -1,4 +1,6 @@
-<div class="p-6 max-w-3xl mx-auto bg-white rounded-lg shadow-md">
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div *ngIf="!isLoading" class="p-6 max-w-3xl mx-auto bg-white rounded-lg shadow-md">
   <h2 class="text-2xl font-bold mb-6 text-purple-700 flex items-center">
     📩 Messages
     <span class="ml-2 text-gray-500 text-sm font-normal">
@@ -33,7 +35,6 @@
         {{ msg.message }}
       </div>
 
-      <!-- ✅ Delete Button -->
       <button
         (click)="deleteMessage(msg.id)"
         class="bg-red-600 text-white px-3 py-1 text-sm rounded hover:bg-red-700"

@@ -1,3 +1,10 @@
+<!-- 👇 Loading Spinner -->
+<app-loading *ngIf="isLoading"></app-loading>
+
+<!-- 👇 Form shown when not loading -->
+<div *ngIf="!isLoading" class="max-w-2xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+
+
 <div class="max-w-2xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
   <h2 class="text-2xl font-bold mb-6 text-center text-blue-800">Upload Your Project</h2>
 
@@ -40,4 +47,5 @@
       Upload Project
     </button>
   </form>
+</div>
 </div>

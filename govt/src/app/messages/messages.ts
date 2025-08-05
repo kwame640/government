@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { environment } from '../environments/environments';
+import { LoadingComponent } from '../loading/loading';  
 
 interface Message {
   id: number;
@@ -15,18 +16,22 @@ interface Message {
 @Component({
   selector: 'app-messages',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, LoadingComponent],
   templateUrl: './messages.html',
   styleUrls: ['./messages.css']
 })
 export class MessagesComponent implements OnInit {
   messages: Message[] = [];
   errorMessage: string = '';
+  isLoading: boolean = true;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.loadMessages();
+    // Start loading state
+    setTimeout(() => {
+      this.loadMessages();
+    }, 5000); // Simulate 5-second delay
   }
 
   loadMessages(): void {
@@ -36,6 +41,7 @@ export class MessagesComponent implements OnInit {
       )
       .subscribe({
         next: (res) => {
+          this.isLoading = false;
           if (res.success) {
             this.messages = res.messages;
           } else {
@@ -43,6 +49,7 @@ export class MessagesComponent implements OnInit {
           }
         },
         error: (err) => {
+          this.isLoading = false;
           console.error('Error fetching messages:', err);
           this.errorMessage = 'Could not load messages.';
         }

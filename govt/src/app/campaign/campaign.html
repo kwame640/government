@@ -1,3 +1,8 @@
+<!-- 🔄 Loading Spinner -->
+<app-loading *ngIf="isLoading"></app-loading>
+
+<!-- ✅ Page Content (shown after loading) -->
+<div *ngIf="!isLoading" class="min-h-screen bg-white py-12 px-6 md:px-20">
 
   <!-- 🎯 Campaign Mission Section -->
   <div class="grid md:grid-cols-2 gap-10 items-center mb-16">
@@ -50,4 +55,4 @@
     </div>
   </div>
 
-
+</div>

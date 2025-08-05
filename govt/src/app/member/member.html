@@ -4,9 +4,9 @@
     <span class="text-sm text-gray-500">Total: {{ users.length }}</span>
   </h1>
 
-  <div *ngIf="isLoading" class="text-center text-gray-600 mb-4">
-    <span class="animate-pulse">Loading users...</span>
-  </div>
+ <app-loading *ngIf="isLoading"></app-loading>
+
+  <div *ngIf="!isLoading">
 
   <div *ngIf="errorMessage" class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4">
     {{ errorMessage }}
@@ -138,4 +138,5 @@
       </div>
     </form>
   </div>
+</div>
 </div>
