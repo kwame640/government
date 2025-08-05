@@ -19,9 +19,31 @@ export class ResetComponent {
   message = '';
   error = '';
 
+  showNewPassword = false;
+  showConfirmPassword = false;
+  isToggling = false;
+
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
-    // ✅ Get token from query string
     this.token = this.route.snapshot.queryParamMap.get('token') || '';
+  }
+
+  togglePassword(field: 'new' | 'confirm') {
+    if (this.isToggling) return;
+    this.isToggling = true;
+
+    if (field === 'new') {
+      this.showNewPassword = true;
+      setTimeout(() => {
+        this.showNewPassword = false;
+        this.isToggling = false;
+      }, 3000);
+    } else {
+      this.showConfirmPassword = true;
+      setTimeout(() => {
+        this.showConfirmPassword = false;
+        this.isToggling = false;
+      }, 3000);
+    }
   }
 
   submit() {

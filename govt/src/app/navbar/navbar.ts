@@ -15,8 +15,9 @@ export class NavbarComponent implements OnInit {
   isLoggedIn = false;
   isAdmin = false;
   menuOpen = false;
+  moreMenuOpen = false; // ✅ Controls mobile 3-dot menu
   dropdownOpen = false;
-  dropdownLocked = false; // ✅ Tracks click locking
+  dropdownLocked = false;
 
   constructor(
     private authService: AuthService,
@@ -31,7 +32,7 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  /** ✅ Hover Mode */
+  /** ✅ Desktop hover logic */
   onHover(isOver: boolean) {
     if (!this.dropdownLocked) {
       this.dropdownOpen = isOver;
@@ -44,18 +45,22 @@ export class NavbarComponent implements OnInit {
     this.dropdownOpen = this.dropdownLocked || !this.dropdownOpen;
   }
 
+  /** ✅ Logout function */
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
     this.dropdownOpen = false;
     this.dropdownLocked = false;
+    this.moreMenuOpen = false; // Close mobile menu if open
   }
 
+  /** ✅ Close dropdowns on outside click */
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: Event) {
     if (!this.eRef.nativeElement.contains(event.target)) {
       this.dropdownOpen = false;
       this.dropdownLocked = false;
+      this.moreMenuOpen = false;
     }
   }
 }

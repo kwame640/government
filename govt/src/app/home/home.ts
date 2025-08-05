@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environments';
 import { FormsModule } from '@angular/forms';
+import { LoadingComponent } from '../loading/loading'; // ✅ Make sure path is correct
 
 interface Project {
   title: string;
@@ -18,7 +19,7 @@ interface Project {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, HttpClientModule, CommonModule, FormsModule],
+  imports: [RouterModule, HttpClientModule, CommonModule, FormsModule, LoadingComponent],
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
@@ -31,8 +32,8 @@ export class HomeComponent {
   activeIndex: number = 0;
   projects: Project[] = [];
   searchTerm: string = '';
+  isLoading: boolean = true; // ✅ show loader initially
 
-  // ✅ Track multiple expanded projects
   expandedProjects = new Set<string>();
 
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
@@ -48,18 +49,24 @@ export class HomeComponent {
     }, 5000);
   }
 
-  loadProjects() {
+loadProjects() {
+  this.isLoading = true; // ✅ Show loading spinner
+
+  // ⏳ Simulate 5 seconds (5000ms) delay
+  setTimeout(() => {
     this.http.get<Project[]>(`${environment.siteUrl}/api/get_projects.php`)
       .subscribe({
         next: data => {
-          console.log('Fetched projects:', data);
           this.projects = data;
+          this.isLoading = false; // ✅ Stop loading after data is fetched
         },
         error: err => {
           console.error('Failed to load projects', err);
+          this.isLoading = false; // ✅ Stop loading even on error
         }
       });
-  }
+  }, 5000); // ✅ 5 seconds
+}
 
   filteredProjects(): Project[] {
     const term = this.searchTerm.toLowerCase().trim();
@@ -69,7 +76,6 @@ export class HomeComponent {
     );
   }
 
-  // ✅ Toggle single project expansion without affecting others
   toggleReadMore(title: string) {
     if (this.expandedProjects.has(title)) {
       this.expandedProjects.delete(title);
@@ -78,12 +84,10 @@ export class HomeComponent {
     }
   }
 
-  // ✅ Check if project is expanded
   isExpanded(title: string): boolean {
     return this.expandedProjects.has(title);
   }
 
-  // ✅ Show full or trimmed description
   getShortDescription(description: string, title: string): string {
     const maxLength = 100;
     if (this.isExpanded(title) || description.length <= maxLength) {

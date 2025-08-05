@@ -5,13 +5,13 @@
       <img src="assets/images/logo.png" alt="Logo" class="h-10 w-auto" />
     </a>
 
-    <!-- Hamburger Button -->
-    <button class="lg:hidden" (click)="menuOpen = !menuOpen">
-      <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2"
-           viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
-    </button>
+    <!-- Mobile Home & Executive & ⋮ on small screens -->
+    <div class="lg:hidden flex items-center space-x-4">
+      <a routerLink="/home" class="text-xl hover:text-gray-300">🏠</a>
+      <a routerLink="/executive" class="text-sm hover:text-gray-300">Executive</a>
+      <a routerLink="/campaign" class="block px-3 py-2 rounded hover:bg-white hover:text-blue-800">Campaign</a>
+      <button (click)="moreMenuOpen = !moreMenuOpen" class="text-2xl hover:text-gray-300">⋮</button>
+    </div>
 
     <!-- Desktop Menu -->
     <ul class="hidden lg:flex space-x-6 text-sm font-medium items-center">
@@ -20,12 +20,8 @@
       <li><a routerLink="/contact" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Contact Us</a></li>
       <li><a routerLink="/about" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">About Us</a></li>
       <li><a routerLink="/campaign" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Campaign</a></li>
-      <li *ngIf="isAdmin">
-        <a routerLink="/member" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Member</a>
-      </li>
-      <li>
-        <a routerLink="/news" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">News & Update</a>
-      </li>
+      <li *ngIf="isAdmin"><a routerLink="/member" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">Member</a></li>
+      <li><a routerLink="/news" class="px-3 py-2 rounded hover:bg-white hover:text-blue-800 transition">News & Update</a></li>
 
       <!-- If NOT logged in -->
       <li *ngIf="!isLoggedIn; else loggedInBlock">
@@ -35,17 +31,12 @@
 
       <!-- Logged-in dropdown -->
       <ng-template #loggedInBlock>
-        <li class="relative"
-            (mouseenter)="onHover(true)"
-            (mouseleave)="onHover(false)">
+        <li class="relative" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)">
           <button (click)="toggleDropdown(true)" class="flex items-center space-x-2 focus:outline-none">
-            <img src="/assets/images/icon.jpg"
-                 class="w-8 h-8 rounded-full border border-white"
-                 alt="User" />
+            <img src="/assets/images/icon.jpg" class="w-8 h-8 rounded-full border border-white" alt="User" />
           </button>
 
-          <div *ngIf="dropdownOpen"
-               class="absolute right-0 mt-2 w-48 bg-white text-gray-700 rounded-md shadow-md z-50">
+          <div *ngIf="dropdownOpen" class="absolute right-0 mt-2 w-48 bg-white text-gray-700 rounded-md shadow-md z-50">
             <a routerLink="/profile" class="block px-4 py-2 hover:bg-gray-100">👤 Profile</a>
             <a routerLink="/messages" class="block px-4 py-2 hover:bg-gray-100">💬 Messages</a>
             <a *ngIf="isAdmin" routerLink="/project" class="block px-4 py-2 hover:bg-gray-100">📂 Project</a>
@@ -56,17 +47,12 @@
     </ul>
   </div>
 
-  <!-- Mobile Menu -->
-  <div *ngIf="menuOpen" class="lg:hidden bg-blue-800 text-white shadow-md">
-    <ul class="flex flex-col space-y-2 p-4 text-sm font-medium">
-      <li><a routerLink="/home" class="block px-3 py-2 rounded hover:bg-white hover:text-blue-800">Home</a></li>
-      <li><a routerLink="/executive" class="block px-3 py-2 rounded hover:bg-white hover:text-blue-800">Executive</a></li>
+  <!-- Mobile More Menu (Dropdown) -->
+  <div *ngIf="moreMenuOpen" class="lg:hidden bg-blue-900 mt-2 rounded px-4 py-3 shadow-md">
+    <ul class="flex flex-col space-y-2 text-sm font-medium">
       <li><a routerLink="/contact" class="block px-3 py-2 rounded hover:bg-white hover:text-blue-800">Contact Us</a></li>
       <li><a routerLink="/about" class="block px-3 py-2 rounded hover:bg-white hover:text-blue-800">About Us</a></li>
-      <li><a routerLink="/campaign" class="block px-3 py-2 rounded hover:bg-white hover:text-blue-800">Campaign</a></li>
-      <li *ngIf="isAdmin">
-        <a routerLink="/member" class="block px-3 py-2 rounded hover:bg-white hover:text-blue-800">Member</a>
-      </li>
+      <li *ngIf="isAdmin"><a routerLink="/member" class="block px-3 py-2 rounded hover:bg-white hover:text-blue-800">Member</a></li>
       <li><a routerLink="/news" class="block px-3 py-2 rounded hover:bg-white hover:text-blue-800">News & Update</a></li>
 
       <li *ngIf="!isLoggedIn">

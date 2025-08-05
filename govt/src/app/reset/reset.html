@@ -1,3 +1,9 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
+
 <div class="min-h-screen flex items-center justify-center bg-gray-100">
   <div class="bg-white p-6 rounded-lg shadow-md max-w-md w-full">
     <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Reset Password</h2>
@@ -6,24 +12,43 @@
     </p>
 
     <form (ngSubmit)="submit()">
-      <input
-        type="password"
-        [(ngModel)]="newPassword"
-        name="newPassword"
-        placeholder="New password"
-        class="w-full border px-4 py-2 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-red-600"
-        required
-      />
+      <!-- 🔐 New Password Field -->
+      <div class="relative mb-4">
+        <input
+          [type]="showNewPassword ? 'text' : 'password'"
+          [(ngModel)]="newPassword"
+          name="newPassword"
+          placeholder="New password"
+          class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+          required
+        />
+        <span
+          class="absolute right-3 top-2.5 cursor-pointer text-gray-600"
+          (click)="togglePassword('new')"
+        >
+          <i class="fas" [ngClass]="showNewPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+        </span>
+      </div>
 
-      <input
-        type="password"
-        [(ngModel)]="confirmPassword"
-        name="confirmPassword"
-        placeholder="Confirm password"
-        class="w-full border px-4 py-2 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-red-600"
-        required
-      />
+      <!-- 🔐 Confirm Password Field -->
+      <div class="relative mb-4">
+        <input
+          [type]="showConfirmPassword ? 'text' : 'password'"
+          [(ngModel)]="confirmPassword"
+          name="confirmPassword"
+          placeholder="Confirm password"
+          class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+          required
+        />
+        <span
+          class="absolute right-3 top-2.5 cursor-pointer text-gray-600"
+          (click)="togglePassword('confirm')"
+        >
+          <i class="fas" [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+        </span>
+      </div>
 
+      <!-- 🔘 Submit Button -->
       <button
         type="submit"
         class="w-full bg-red-700 text-white py-2 rounded-lg hover:bg-red-800 transition"
@@ -32,6 +57,7 @@
       </button>
     </form>
 
+    <!-- ✅ Success & Error Messages -->
     <p *ngIf="message" class="text-green-600 mt-3 text-center">{{ message }}</p>
     <p *ngIf="error" class="text-red-600 mt-3 text-center">{{ error }}</p>
   </div>

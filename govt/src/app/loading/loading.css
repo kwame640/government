@@ -1,0 +1,44 @@
+.spinner {
+  animation: rotate 1s linear infinite;
+  position: relative;
+}
+
+/* Make bars wider */
+.spinner::before,
+.spinner::after,
+.spinner div:nth-child(1),
+.spinner div:nth-child(2),
+.spinner div:nth-child(3) {
+  content: "";
+  position: absolute;
+  width: 10px;           /* ✅ Increased width */
+  height: 40px;          /* Height is okay as you said */
+  background-color: blue;
+  border-radius: 5px;
+  top: 10px;
+  left: 50%;
+  transform-origin: center bottom;
+  animation: pulse 1.2s linear infinite;
+}
+
+/* Rotation and delay */
+.spinner div:nth-child(1) { transform: rotate(72deg) translateY(-40px); animation-delay: 0.1s; }
+.spinner div:nth-child(2) { transform: rotate(144deg) translateY(-40px); animation-delay: 0.2s; }
+.spinner div:nth-child(3) { transform: rotate(216deg) translateY(-40px); animation-delay: 0.3s; }
+.spinner::before          { transform: rotate(288deg) translateY(-40px); animation-delay: 0.4s; }
+.spinner::after           { transform: rotate(0deg) translateY(-40px);   animation-delay: 0s; }
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
